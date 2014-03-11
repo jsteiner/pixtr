@@ -7,5 +7,7 @@
 </nav>
 
 <% @gallery.images.each do |image| %>
-  <img src="<%= image.url %>">
+  <%= link_to image do %>
+    <img src="<%= image.url %>">
+  <% end %>
 <% end %>
