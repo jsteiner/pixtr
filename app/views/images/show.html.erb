@@ -1,11 +1,13 @@
 <h2><%= @image.name %></h2>
 
-<nav>
-  <%= link_to 'Edit', edit_image_path(@image) %>
-  <%= link_to 'Delete', @image,
-    method: :delete,
-    confirm: "Are you sure you want to delete this image?" %>
-</nav>
+<% if @image.user == current_user %>
+  <nav>
+    <%= link_to 'Edit', edit_image_path(@image) %>
+    <%= link_to 'Delete', @image,
+      method: :delete,
+      confirm: "Are you sure you want to delete this image?" %>
+  </nav>
+<% end %>
 
 <img src="<%= @image.url %>">
 <p><%= @image.description %></p>

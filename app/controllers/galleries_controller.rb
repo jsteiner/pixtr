@@ -1,6 +1,6 @@
 class GalleriesController < ApplicationController
   def index
-    @galleries = Gallery.all
+    @galleries = current_user.galleries
   end
 
   def show
@@ -12,22 +12,22 @@ class GalleriesController < ApplicationController
   end
 
   def create
-    gallery = Gallery.create(gallery_params)
+    gallery = current_user.galleries.create(gallery_params)
     redirect_to gallery_path(gallery)
   end
 
   def edit
-    @gallery = Gallery.find(params[:id])
+    @gallery = current_user.galleries.find(params[:id])
   end
 
   def update
-    gallery = Gallery.find(params[:id])
+    gallery = current_user.galleries.find(params[:id])
     gallery.update(gallery_params)
     redirect_to gallery_path(gallery)
   end
 
   def destroy
-    gallery = Gallery.find(params[:id])
+    gallery = current_user.galleries.find(params[:id])
     gallery.destroy
     redirect_to root_path
   end
