@@ -6,6 +6,8 @@ Pixtr::Application.routes.draw do
     resources :images, only: [:new, :create]
   end
 
+  resources :groups, only: [:index, :show, :new, :create]
+
   resources :images, except: [:index, :new, :create] do
     resources :comments, only: [:create]
   end
