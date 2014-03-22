@@ -32,4 +32,16 @@ class User < ActiveRecord::Base
   def following?(other_user)
     followed_user_ids.include? other_user.id
   end
+
+  def join(group)
+    groups << group
+  end
+
+  def leave(group)
+    groups.destroy(group)
+  end
+
+  def member?(group)
+    group_ids.include? group.id
+  end
 end
