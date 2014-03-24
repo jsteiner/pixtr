@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   include Clearance::User
 
+  has_many :activities
+
   has_many :galleries, dependent: :destroy
   has_many :images, through: :galleries
 
@@ -47,7 +49,14 @@ class User < ActiveRecord::Base
   end
 
   def like(image)
-    liked_images << image
+    like = likes.create(image: image)
+
+    followers.each do |follower|
+      follower.activities.create(
+        subject: like,
+        type: 'LikeActivity'
+      )
+    end
   end
 
   def unlike(image)
