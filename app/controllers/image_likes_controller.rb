@@ -1,4 +1,4 @@
-class LikesController < ApplicationController
+class ImageLikesController < ApplicationController
   def create
     image = find_image
     current_user.like image

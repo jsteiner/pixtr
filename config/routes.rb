@@ -12,14 +12,16 @@ Pixtr::Application.routes.draw do
     member do
       post "join" => "group_memberships#create"
       delete "leave" => "group_memberships#destroy"
+      post "like" => "group_likes#create"
+      delete "unlike" => "group_likes#destroy"
     end
   end
 
   resources :images, except: [:index, :new, :create] do
     resources :comments, only: [:create]
     member do
-      post "like" => "likes#create"
-      delete "unlike" => "likes#destroy"
+      post "like" => "image_likes#create"
+      delete "unlike" => "image_likes#destroy"
     end
   end
 

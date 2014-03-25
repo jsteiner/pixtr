@@ -7,7 +7,10 @@ class User < ActiveRecord::Base
   has_many :images, through: :galleries
 
   has_many :likes, dependent: :destroy
-  has_many :liked_images, through: :likes, source: :image
+  has_many :liked_images,
+    through: :likes,
+    source: :likable,
+    source_type: 'Image'
 
   has_many :group_memberships, foreign_key: :member_id, dependent: :destroy
   has_many :groups, through: :group_memberships
@@ -50,17 +53,18 @@ class User < ActiveRecord::Base
     groups.destroy(group)
   end
 
-  def like(image)
-    like = likes.create(image: image)
+  def like(target)
+    like = likes.create(likable: target)
     notify_followers(like, "LikeActivity")
   end
 
-  def unlike(image)
-    liked_images.destroy(image)
+  def unlike(target)
+    like = likes.find_by(likeable: target)
+    like.destroy
   end
 
-  def likes?(image)
-    liked_image_ids.include? image.id
+  def likes?(target)
+    likes.exists?(likable: target)
   end
 
   def member?(group)

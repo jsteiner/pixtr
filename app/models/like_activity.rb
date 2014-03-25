@@ -3,11 +3,11 @@ class LikeActivity < Activity
     subject.user.email
   end
 
-  def image
-    subject.image
+  def likable
+    subject.likable
   end
 
-  def image_name
-    image.name
+  def likable_name
+    likable.name
   end
 end
