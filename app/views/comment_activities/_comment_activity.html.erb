@@ -1,3 +1,5 @@
-<%= comment_activity.subject.user.email %>
-commented on
-<%= comment_activity.subject.image.name %>
+<li>
+  <%= comment_activity.email %>
+  commented on
+  <%= link_to comment_activity.image_name, comment_activity.image %>
+</li>
