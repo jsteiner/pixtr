@@ -30,13 +30,7 @@ class User < ActiveRecord::Base
 
   def follow(other_user)
     following_relationship = followed_user_relationships.create(followed_user: other_user)
-
-    followers.each do |follower|
-      follower.activities.create(
-        subject: following_relationship,
-        type: "FollowingRelationshipActivity"
-      )
-    end
+    notify_followers(following_relationship, "FollowingRelationshipActivity")
   end
 
   def unfollow(other_user)
@@ -49,13 +43,7 @@ class User < ActiveRecord::Base
 
   def join(group)
     group_membership = group_memberships.create(group: group)
-
-    followers.each do |follower|
-      follower.activities.create(
-        subject: group_membership,
-        type: "GroupMembershipActivity"
-      )
-    end
+    notify_followers(group_membership, "GroupMembershipActivity")
   end
 
   def leave(group)
@@ -64,13 +52,7 @@ class User < ActiveRecord::Base
 
   def like(image)
     like = likes.create(image: image)
-
-    followers.each do |follower|
-      follower.activities.create(
-        subject: like,
-        type: 'LikeActivity'
-      )
-    end
+    notify_followers(like, "LikeActivity")
   end
 
   def unlike(image)
@@ -83,5 +65,14 @@ class User < ActiveRecord::Base
 
   def member?(group)
     group_ids.include? group.id
+  end
+
+  def notify_followers(subject, type)
+    followers.each do |follower|
+      follower.activities.create(
+        subject: subject,
+        type: type
+      )
+    end
   end
 end
