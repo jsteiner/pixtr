@@ -29,7 +29,14 @@ class User < ActiveRecord::Base
     through: :follower_relationships
 
   def follow(other_user)
-    followed_users << other_user
+    following_relationship = followed_user_relationships.create(followed_user: other_user)
+
+    followers.each do |follower|
+      follower.activities.create(
+        subject: following_relationship,
+        type: "FollowingRelationshipActivity"
+      )
+    end
   end
 
   def unfollow(other_user)
@@ -41,7 +48,14 @@ class User < ActiveRecord::Base
   end
 
   def join(group)
-    groups << group
+    group_membership = group_memberships.create(group: group)
+
+    followers.each do |follower|
+      follower.activities.create(
+        subject: group_membership,
+        type: "GroupMembershipActivity"
+      )
+    end
   end
 
   def leave(group)
