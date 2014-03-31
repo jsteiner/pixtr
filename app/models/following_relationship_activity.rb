@@ -1,9 +1,9 @@
 class FollowingRelationshipActivity < Activity
   def follower_email
-    subject.follower.email
+    actor.email
   end
 
   def followed_user_email
-    subject.followed_user.email
+    target.email
   end
 end

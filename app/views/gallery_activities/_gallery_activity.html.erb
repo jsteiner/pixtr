@@ -1,5 +1,5 @@
 <li>
-  <%= gallery_activity.subject.user.email %>
+  <%= link_to gallery_activity.email, gallery_activity.actor %>
   created the gallery
   <%= link_to gallery_activity.gallery_name, gallery_activity.subject %>
 </li>
