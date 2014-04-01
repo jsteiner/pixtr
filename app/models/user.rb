@@ -81,4 +81,5 @@ class User < ActiveRecord::Base
       )
     end
   end
+  handle_asynchronously :notify_followers
 end
