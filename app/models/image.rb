@@ -14,13 +14,6 @@ class Image < ActiveRecord::Base
   validates :description, presence: true
   validates :url, presence: true
 
-  searchable do
-    text :name, :description
-    text :tags do
-      tags.map(&:name)
-    end
-  end
-
   def user
     gallery.user
   end
