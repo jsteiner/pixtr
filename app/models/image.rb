@@ -23,9 +23,9 @@ class Image < ActiveRecord::Base
   end
 
   def tag_list=(tag_string)
-    tag_string.split(",").each do |tag_name|
-      tag = Tag.find_or_create_by(name: tag_name.strip.downcase)
-      tags << tag
+    tags = tag_string.split(",").map do |tag_name|
+      Tag.find_or_create_by(name: tag_name.strip.downcase)
     end
+    self.tags = tags
   end
 end
