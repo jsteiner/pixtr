@@ -3,6 +3,7 @@ Pixtr::Application.routes.draw do
 
   root "homes#show"
   resource :dashboard, only: [:show]
+  resources :tags, only: [:show]
 
   resources :galleries do
     resources :images, only: [:new, :create]

@@ -11,6 +11,11 @@
 
 <%= image_tag(@image.url, width: 200) %>
 <p><%= @image.description %></p>
+
+<% @tags.each do |tag| %>
+  <%= link_to tag.name, tag %>
+<% end %>
+
 <p>Added by: <%= link_to @image.user.email, @image.user %></p>
 <p>Added on: <%= @image.created_at.to_date %></p>
 

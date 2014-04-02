@@ -18,6 +18,7 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
     @comment = Comment.new
     @comments = @image.comments.recent.page(params[:page]).per(2).includes(:user)
+    @tags = @image.tags
   end
 
   def edit
@@ -48,6 +49,7 @@ class ImagesController < ApplicationController
       :name,
       :url,
       :description,
+      :tag_list,
       group_ids: []
     )
   end
