@@ -14,6 +14,13 @@ class Image < ActiveRecord::Base
   validates :description, presence: true
   validates :url, presence: true
 
+  searchable do
+    text :name, :description
+    text :tags do
+      tags.map(&:name)
+    end
+  end
+
   def user
     gallery.user
   end
@@ -27,5 +34,12 @@ class Image < ActiveRecord::Base
       Tag.find_or_create_by(name: tag_name.strip.downcase)
     end
     self.tags = tags
+  end
+
+  def self.search(search_params)
+    query = search_params[:query]
+    tags = Tag.search(search_params)
+    image_ids = Tagging.where(tag_id: tags).pluck(:image_id)
+    where("name ILIKE :query OR description ILIKE :query OR id IN (:image_ids)", query: "%#{query}%", image_ids: image_ids)
   end
 end
