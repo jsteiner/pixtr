@@ -34,4 +34,7 @@ Pixtr::Application.routes.draw do
       delete "unfollow" => "following_relationships#destroy"
     end
   end
+
+  resource :account, only: [:show]
+  resources :charges, only: [:create]
 end

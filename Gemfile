@@ -11,11 +11,13 @@ gem 'jbuilder', '~> 1.2'
 gem 'clearance'
 gem 'kaminari'
 gem 'delayed_job_active_record'
+gem 'stripe', github: 'stripe/stripe-ruby'
 
 group :development do
   gem 'pry-rails'
   gem 'quiet_assets'
   gem 'bullet'
+  gem 'dotenv-rails'
 end
 
 group :doc do

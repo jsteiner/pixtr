@@ -82,4 +82,8 @@ class User < ActiveRecord::Base
     end
   end
   handle_asynchronously :notify_followers
+
+  def upgraded?
+    stripe_id.present?
+  end
 end
