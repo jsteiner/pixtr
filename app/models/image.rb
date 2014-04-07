@@ -19,7 +19,7 @@ class Image < ActiveRecord::Base
   end
 
   def tag_list
-    tags.map(&:name).join(", ")
+    tags.pluck(:name).join(", ")
   end
 
   def tag_list=(tag_string)
