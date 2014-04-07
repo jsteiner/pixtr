@@ -10,4 +10,4 @@ class SearchesController < ApplicationController
     image_searcher = ImageSearcher.new(params[:search])
     image_searcher.images.includes(gallery: [:user])
   end
-eni
+end
