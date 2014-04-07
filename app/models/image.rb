@@ -28,11 +28,4 @@ class Image < ActiveRecord::Base
     end
     self.tags = tags
   end
-
-  def self.search(search_params)
-    query = search_params[:query]
-    tags = Tag.search(search_params)
-    image_ids = Tagging.where(tag_id: tags).pluck(:image_id)
-    where("name ILIKE :query OR description ILIKE :query OR id IN (:image_ids)", query: "%#{query}%", image_ids: image_ids)
-  end
 end
