@@ -9,4 +9,8 @@ class Comment < ActiveRecord::Base
   def self.recent
     order(created_at: :desc)
   end
+
+  def self.paginated(page)
+    recent.page(page).per(2).includes(:user)
+  end
 end
