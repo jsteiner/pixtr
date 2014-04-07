@@ -24,6 +24,10 @@ class ImageSearcher
   end
 
   def tags
-    Tag.search(search_params)
+    tag_searcher.tags
+  end
+
+  def tag_searcher
+    TagSearcher.new(search_params)
   end
 end
