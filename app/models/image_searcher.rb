@@ -9,6 +9,7 @@ class ImageSearcher
   end
 
   private
+
   attr_reader :search_params, :query
 
   def find_images_by_name_description_and_tags

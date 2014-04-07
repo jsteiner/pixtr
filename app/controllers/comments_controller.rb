@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   def create
     image = Image.find(params[:image_id])
     comment = image.comments.new(comment_params)
+
     if comment.save
       current_user.notify_followers(comment, image, "CommentActivity")
       redirect_to image, notice: "Commented successfully"

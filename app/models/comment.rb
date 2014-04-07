@@ -1,4 +1,5 @@
 class Comment < ActiveRecord::Base
+  paginates_per 2
   belongs_to :user
   belongs_to :image
   has_many :activities, as: :subject, dependent: :destroy
@@ -11,6 +12,6 @@ class Comment < ActiveRecord::Base
   end
 
   def self.paginated(page)
-    recent.page(page).per(2).includes(:user)
+    recent.page(page).includes(:user)
   end
 end
