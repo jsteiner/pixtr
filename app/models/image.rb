@@ -23,9 +23,6 @@ class Image < ActiveRecord::Base
   end
 
   def tag_list=(tag_string)
-    tags = tag_string.split(",").map do |tag_name|
-      Tag.find_or_create_by(name: tag_name.strip.downcase)
-    end
-    self.tags = tags
+    self.tags = Tag.from_tag_list(tag_string)
   end
 end
