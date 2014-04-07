@@ -1,4 +1,6 @@
 class ImagesController < ApplicationController
+  respond_to :html
+
   def new
     @gallery = find_gallery
     @image = Image.new
@@ -6,12 +8,9 @@ class ImagesController < ApplicationController
 
   def create
     @gallery = find_gallery
-    @image = @gallery.images.new(image_params)
-    if @image.save
-      redirect_to @gallery
-    else
-      render :new
-    end
+    @image = @gallery.images.create(image_params)
+
+    respond_with @image, location: @gallery
   end
 
   def show
@@ -28,12 +27,10 @@ class ImagesController < ApplicationController
 
   def update
     @image = find_image
-    if @image.update(image_params)
-      redirect_to @image
-    else
-      @groups = current_user.groups
-      render :edit
-    end
+    @image.update(image_params)
+    @groups = current_user.groups
+
+    respond_with @image
   end
 
   def destroy
