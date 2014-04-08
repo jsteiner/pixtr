@@ -32,8 +32,7 @@ class User < ActiveRecord::Base
     through: :follower_relationships
 
   def follow(other_user)
-    following_relationship = followed_user_relationships.create(followed_user: other_user)
-    notify_followers(following_relationship, other_user, "FollowingRelationshipActivity")
+    followed_user_relationships.create(followed_user: other_user)
   end
 
   def unfollow(other_user)
@@ -45,8 +44,7 @@ class User < ActiveRecord::Base
   end
 
   def join(group)
-    group_membership = group_memberships.create(group: group)
-    notify_followers(group_membership, group, "GroupMembershipActivity")
+    group_memberships.create(group: group)
   end
 
   def leave(group)
@@ -54,8 +52,7 @@ class User < ActiveRecord::Base
   end
 
   def like(target)
-    like = likes.create(likable: target)
-    notify_followers(like, target, "LikeActivity")
+    likes.create(likable: target)
   end
 
   def unlike(target)
@@ -70,18 +67,6 @@ class User < ActiveRecord::Base
   def member?(group)
     group_ids.include? group.id
   end
-
-  def notify_followers(subject, target, type)
-    followers.each do |follower|
-      follower.activities.create(
-        subject: subject,
-        type: type,
-        actor: self,
-        target: target
-      )
-    end
-  end
-  handle_asynchronously :notify_followers
 
   def upgraded?
     stripe_id.present?

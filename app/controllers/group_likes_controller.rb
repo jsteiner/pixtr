@@ -1,7 +1,8 @@
 class GroupLikesController < ApplicationController
   def create
     group = find_group
-    current_user.like group
+    like = current_user.like group
+    notify_followers(like, group)
     redirect_to group
   end
 

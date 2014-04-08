@@ -19,7 +19,7 @@ class GalleriesController < ApplicationController
     @gallery = current_user.galleries.new(gallery_params)
 
     if @gallery.save
-      current_user.notify_followers(@gallery, @gallery, "GalleryActivity")
+      notify_followers(@gallery, @gallery)
       redirect_to @gallery
     else
       render :new

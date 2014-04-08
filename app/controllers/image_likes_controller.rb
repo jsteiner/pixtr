@@ -1,7 +1,8 @@
 class ImageLikesController < ApplicationController
   def create
     image = find_image
-    current_user.like image
+    like = current_user.like image
+    notify_followers(like, image)
     redirect_to image
   end
 

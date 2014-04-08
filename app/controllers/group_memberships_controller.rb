@@ -1,7 +1,8 @@
 class GroupMembershipsController < ApplicationController
   def create
     group = find_group
-    current_user.join group
+    group_membership = current_user.join group
+    notify_followers(group_membership, group)
     redirect_to group
   end
 
